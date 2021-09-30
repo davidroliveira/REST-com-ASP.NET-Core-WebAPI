@@ -42,8 +42,7 @@ namespace DevIO.Api.Controllers
 
         protected ActionResult CustomResponse(ModelStateDictionary modelState)
         {
-            if (!modelState.IsValid) 
-                NotificarErroModelInvalida(modelState);
+            if(!modelState.IsValid) NotificarErroModelInvalida(modelState);
             return CustomResponse();
         }
 

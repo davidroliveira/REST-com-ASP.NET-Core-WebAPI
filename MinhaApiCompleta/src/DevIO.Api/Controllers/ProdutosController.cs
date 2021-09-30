@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
-using DevIO.Api.ViewModel;
+using DevIO.Api.ViewModels;
 using DevIO.Business.Intefaces;
 using DevIO.Business.Models;
 using Microsoft.AspNetCore.Http;
@@ -11,16 +11,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DevIO.Api.Controllers
 {
-    [Route("api/produto")]
-    public class ProdutoController : MainController
+    [Route("api/produtos")]
+    public class ProdutosController : MainController
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IProdutoService _produtoService;
         private readonly IMapper _mapper;
 
-        public ProdutoController(INotificador notificador,
-                                  IProdutoRepository produtoRepository,
-                                  IProdutoService produtoService,
+        public ProdutosController(INotificador notificador, 
+                                  IProdutoRepository produtoRepository, 
+                                  IProdutoService produtoService, 
                                   IMapper mapper) : base(notificador)
         {
             _produtoRepository = produtoRepository;
@@ -50,8 +50,10 @@ namespace DevIO.Api.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var imagemNome = Guid.NewGuid() + "_" + produtoViewModel.Imagem;
-            if (!UploadArquivo(produtoViewModel.ImagemUpload, imagemNome))            
-                return CustomResponse(produtoViewModel);            
+            if (!UploadArquivo(produtoViewModel.ImagemUpload, imagemNome))
+            {
+                return CustomResponse(produtoViewModel);
+            }
 
             produtoViewModel.Imagem = imagemNome;
             await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
@@ -92,7 +94,7 @@ namespace DevIO.Api.Controllers
 
             return CustomResponse(produtoViewModel);
         }
-/*
+
         [HttpPost("Adicionar")]
         public async Task<ActionResult<ProdutoViewModel>> AdicionarAlternativo(ProdutoImagemViewModel produtoViewModel)
         {
@@ -109,7 +111,7 @@ namespace DevIO.Api.Controllers
 
             return CustomResponse(produtoViewModel);
         }
-*/
+
 
         [RequestSizeLimit(40000000)]
         //[DisableRequestSizeLimit]
@@ -142,7 +144,7 @@ namespace DevIO.Api.Controllers
 
             var imageDataByteArray = Convert.FromBase64String(arquivo);
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imgNome);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/app/demo-webapi/src/assets", imgNome);
 
             if (System.IO.File.Exists(filePath))
             {
