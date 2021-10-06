@@ -25,7 +25,6 @@ namespace DevIO.Api.Configuration
                 .AddDefaultTokenProviders();
 
             // JWT
-/*
             var appSettingsSection = configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
@@ -50,7 +49,7 @@ namespace DevIO.Api.Configuration
                     ValidIssuer = appSettings.Emissor
                 };
             });
-*/
+
             return services;
         }
     }
