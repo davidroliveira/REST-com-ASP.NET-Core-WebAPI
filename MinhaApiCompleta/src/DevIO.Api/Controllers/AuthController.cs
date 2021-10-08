@@ -30,7 +30,7 @@ namespace DevIO.Api.V1.Controllers
                               SignInManager<IdentityUser> signInManager,
                               UserManager<IdentityUser> userManager,
                               IOptions<AppSettings> appSettings/*,
-                              IUser user, ILogger<AuthController> logger*/) : base(notificador/*, user*/)
+                              IUser user/*, ILogger<AuthController> logger*/) : base(notificador/*, user*/)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -89,7 +89,7 @@ namespace DevIO.Api.V1.Controllers
             return CustomResponse(loginUser);
         }
 
-        private async Task<string /*LoginResponseViewModel*/> GerarJwt(string email)
+        private async Task<LoginResponseViewModel> GerarJwt(string email)
         {
             
             var user = await _userManager.FindByEmailAsync(email);
@@ -121,9 +121,9 @@ namespace DevIO.Api.V1.Controllers
                 Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             });
-            
+
             var encodedToken = tokenHandler.WriteToken(token);
-            /*
+
             var response = new LoginResponseViewModel
             {
                 AccessToken = encodedToken,
@@ -135,9 +135,8 @@ namespace DevIO.Api.V1.Controllers
                     Claims = claims.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
                 }
             };
-            */
-            //return response;
-            return encodedToken;
+            
+            return response;            
         }
 
         private static long ToUnixEpochDate(DateTime date)
