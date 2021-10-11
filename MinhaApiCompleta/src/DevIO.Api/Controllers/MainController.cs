@@ -16,11 +16,11 @@ namespace DevIO.Api.Controllers
         protected Guid UsuarioId { get; set; }
         protected bool UsuarioAutenticado { get; set; }
 
-        protected MainController(INotificador notificador/*,
-                                 IUser appUser*/)
+        protected MainController(INotificador notificador,
+                                 IUser appUser)
         {
             _notificador = notificador;
-            /*
+            
             AppUser = appUser;
 
             if (appUser.IsAuthenticated())
@@ -28,7 +28,7 @@ namespace DevIO.Api.Controllers
                 UsuarioId = appUser.GetUserId();
                 UsuarioAutenticado = true;
             }
-            */
+            
         }
 
         protected bool OperacaoValida()
