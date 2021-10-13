@@ -13,8 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevIO.Api.V1.Controllers
 {
     [Authorize]
-    //[ApiVersion("1.0")]
-    [Route("api/fornecedores")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/fornecedores")]
     public class FornecedoresController : MainController
     {
         private readonly IFornecedorRepository _fornecedorRepository;
@@ -41,7 +41,7 @@ namespace DevIO.Api.V1.Controllers
         {
             return _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos());
         }
-
+                
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<FornecedorViewModel>> ObterPorId(Guid id)
         {

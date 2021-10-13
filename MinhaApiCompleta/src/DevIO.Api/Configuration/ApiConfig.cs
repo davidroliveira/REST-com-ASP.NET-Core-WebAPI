@@ -10,6 +10,19 @@ namespace DevIO.Api.Configuration
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddApiVersioning(Options =>
+            {
+                Options.AssumeDefaultVersionWhenUnspecified = true;
+                Options.DefaultApiVersion = new ApiVersion(1, 0);
+                Options.ReportApiVersions = true;
+            });
+
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
