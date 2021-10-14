@@ -10,15 +10,14 @@ namespace DevIO.Api.V2.Controllers
     [Route("api/v{version:apiVersion}/teste")]
     public class TesteController : MainController
     {
-        //private readonly ILogger _logger;
+        private readonly ILogger _logger;
 
-        public TesteController(INotificador notificador, IUser appUser/*, ILogger<TesteController> logger*/) : base(notificador, appUser)
+        public TesteController(INotificador notificador, IUser appUser, ILogger<TesteController> logger) : base(notificador, appUser)
         {
-            //_logger = logger;
+            _logger = logger;
         }
 
-        //[HttpGet]
-        [HttpGet, MapToApiVersion("2.0")]
+        [HttpGet]        
         public string Valor()
         {
 
@@ -33,14 +32,14 @@ namespace DevIO.Api.V2.Controllers
             //{
             //    e.Ship(HttpContext);
             //}
-            /*
+            
             _logger.LogTrace("Log de Trace");
             _logger.LogDebug("Log de Debug");
             _logger.LogInformation("Log de Informação");
             _logger.LogWarning("Log de Aviso");
             _logger.LogError("Log de Erro");
             _logger.LogCritical("Log de Problema Critico");
-            */
+            
             return "Sou a V2";
         }
     }
