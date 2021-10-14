@@ -17,7 +17,8 @@ namespace DevIO.Api.V2.Controllers
             //_logger = logger;
         }
 
-        [HttpGet]
+        //[HttpGet]
+        [HttpGet, MapToApiVersion("2.0")]
         public string Valor()
         {
 
