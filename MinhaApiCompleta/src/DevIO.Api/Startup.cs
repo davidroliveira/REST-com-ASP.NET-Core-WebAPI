@@ -35,7 +35,15 @@ namespace DevIO.Api
 
             services.AddSwaggerConfig();
 
-            services.AddLoggingConfiguration();                       
+            services.AddLoggingConfiguration(Configuration);
+
+            /*Movido para o config de logger do elmah
+            services.AddHealthChecks()
+                    .AddCheck("SelectProdutos", new SqlServerHealthCheck(Configuration.GetConnectionString("DefaultConnection")))
+                    .AddSqlServer(Configuration.GetConnectionString("DefaultConnection"), name:"BancoSQLServer");
+
+            services.AddHealthChecksUI();
+            */
 
             services.ResolveDependencies();
         }
@@ -60,6 +68,16 @@ namespace DevIO.Api
             app.UseSwaggerConfig(provider);
 
             app.UseLoggingConfiguration();
+
+            /*Movido para o config de logger do elmah
+            app.UseHealthChecks("/api/hc", new HealthCheckOptions() 
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+
+            app.UseHealthChecksUI(options => { options.UIPath = "/api/hc-ui"; });
+            */
         }
     }
 }
